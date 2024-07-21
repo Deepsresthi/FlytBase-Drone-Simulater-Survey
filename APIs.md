@@ -607,3 +607,256 @@ id: The unique identifier of the mission to stop.
   "error": "Mission not found"
 }
 ```
+
+## Fetch All FlightLogs
+
+### GET /api/flight-logs
+
+Get all the Flight Logs.
+
+#### Response
+
+1. 201 Created
+
+```json
+[
+    {
+        "_id": "669cc4af09f14ccbfb566eee",
+        "flight_id": "FL-1721549999647",
+        "drone_id": "DR12345",
+        "mission_id": "669b9a7fb288ac1e39ed00f5",
+        "mission_name": "Mission 1",
+        "waypoints": [
+            {
+                "time": 0.0028397912565155388,
+                "alt": 40,
+                "lat": 37.43087269786578,
+                "lng": -122.08420293735657,
+                "_id": "669cc4af09f14ccbfb566eef"
+            },
+            {
+                "time": 0.005682407633300645,
+                "alt": 40,
+                "lat": 37.43187269786578,
+                "lng": -122.08520293735657,
+                "_id": "669cc4af09f14ccbfb566ef0"
+            }
+        ],
+        "speed": 50,
+        "distance": 0.28412038166503223,
+        "execution_start": "2024-07-21T08:19:59.647Z",
+        "execution_end": "2024-07-21T08:28:34.183Z",
+        "created_at": "2024-07-21T08:19:59.647Z",
+        "updated_at": "2024-07-21T08:19:59.647Z",
+        "__v": 0
+    },
+    {
+        "_id": "669cc587e272bfcc23e4a65f",
+        "flight_id": "FL-1721550215440",
+        "drone_id": "DR12345",
+        "mission_id": "669b9a7fb288ac1e39ed00f5",
+        "mission_name": "Mission 1",
+        "waypoints": [
+            {
+                "time": 0,
+                "alt": 40,
+                "lat": 37.42987269786578,
+                "lng": -122.08320293735657,
+                "_id": "669cc587e272bfcc23e4a660"
+            },
+            {
+                "time": 0.0028397912565155388,
+                "alt": 40,
+                "lat": 37.43087269786578,
+                "lng": -122.08420293735657,
+                "_id": "669cc587e272bfcc23e4a661"
+            },
+            {
+                "time": 0.005682407633300645,
+                "alt": 40,
+                "lat": 37.43187269786578,
+                "lng": -122.08520293735657,
+                "_id": "669cc587e272bfcc23e4a662"
+            }
+        ],
+        "speed": 50,
+        "distance": 0.28412038166503223,
+        "execution_start": "2024-07-21T08:23:35.440Z",
+        "execution_end": null,
+        "created_at": "2024-07-21T08:23:35.440Z",
+        "updated_at": "2024-07-21T08:23:35.440Z",
+        "__v": 0
+    },
+    {
+        "_id": "669cce56824848f168a00d29",
+        "flight_id": "FL-1721552470778",
+        "drone_id": "DR777",
+        "mission_id": "2024M3",
+        "mission_name": "Survey Mission",
+        "waypoints": [
+            {
+                "time": null,
+                "alt": 100,
+                "lat": 34.0552,
+                "lng": -118.2437,
+                "_id": "669cce56824848f168a00d26"
+            },
+            {
+                "time": null,
+                "alt": 150,
+                "lat": 34.0552,
+                "lng": -118.244,
+                "_id": "669cce56824848f168a00d27"
+            }
+        ],
+        "speed": 50,
+        "distance": 0,
+        "execution_start": null,
+        "execution_end": null,
+        "created_at": "2024-07-21T09:01:10.778Z",
+        "updated_at": "2024-07-21T09:01:10.778Z",
+        "__v": 0
+    },
+    {
+        "_id": "669cce8f824848f168a00d31",
+        "flight_id": "FL-1721552527151",
+        "drone_id": "DR777",
+        "mission_id": "669cce56824848f168a00d25",
+        "mission_name": "Survey Mission",
+        "waypoints": [
+            {
+                "time": 0,
+                "alt": 100,
+                "lat": 34.0552,
+                "lng": -118.2437,
+                "_id": "669cce8f824848f168a00d32"
+            },
+            {
+                "time": 0.0005527489457527132,
+                "alt": 150,
+                "lat": 34.0552,
+                "lng": -118.244,
+                "_id": "669cce8f824848f168a00d33"
+            }
+        ],
+        "speed": 50,
+        "distance": 0.02763744728763566,
+        "execution_start": "2024-07-21T09:02:07.151Z",
+        "execution_end": "2024-07-21T09:02:58.195Z",
+        "created_at": "2024-07-21T09:02:07.151Z",
+        "updated_at": "2024-07-21T09:02:07.151Z",
+        "__v": 0
+    }
+]
+```
+
+2. 500 Internal Server Error
+
+```json
+{
+  "error": "An unexpected error occurred"
+}
+```
+
+## Fetch Flight for Specific Drone
+
+### GET /api/flight-logs/:drone_id
+
+Fetch Flight Details for a particular Drone
+
+Request Params:
+
+id: The unique identifier of drone.
+
+#### Response
+
+1. 200 OK
+
+```json
+[
+    {
+        "_id": "669cc4af09f14ccbfb566eee",
+        "flight_id": "FL-1721549999647",
+        "drone_id": "DR12345",
+        "mission_id": "669b9a7fb288ac1e39ed00f5",
+        "mission_name": "Mission 1",
+        "waypoints": [
+            {
+                "time": 0.0028397912565155388,
+                "alt": 40,
+                "lat": 37.43087269786578,
+                "lng": -122.08420293735657,
+                "_id": "669cc4af09f14ccbfb566eef"
+            },
+            {
+                "time": 0.005682407633300645,
+                "alt": 40,
+                "lat": 37.43187269786578,
+                "lng": -122.08520293735657,
+                "_id": "669cc4af09f14ccbfb566ef0"
+            }
+        ],
+        "speed": 50,
+        "distance": 0.28412038166503223,
+        "execution_start": "2024-07-21T08:19:59.647Z",
+        "execution_end": "2024-07-21T08:28:34.183Z",
+        "created_at": "2024-07-21T08:19:59.647Z",
+        "updated_at": "2024-07-21T08:19:59.647Z",
+        "__v": 0
+    },
+    {
+        "_id": "669cc587e272bfcc23e4a65f",
+        "flight_id": "FL-1721550215440",
+        "drone_id": "DR12345",
+        "mission_id": "669b9a7fb288ac1e39ed00f5",
+        "mission_name": "Mission 1",
+        "waypoints": [
+            {
+                "time": 0,
+                "alt": 40,
+                "lat": 37.42987269786578,
+                "lng": -122.08320293735657,
+                "_id": "669cc587e272bfcc23e4a660"
+            },
+            {
+                "time": 0.0028397912565155388,
+                "alt": 40,
+                "lat": 37.43087269786578,
+                "lng": -122.08420293735657,
+                "_id": "669cc587e272bfcc23e4a661"
+            },
+            {
+                "time": 0.005682407633300645,
+                "alt": 40,
+                "lat": 37.43187269786578,
+                "lng": -122.08520293735657,
+                "_id": "669cc587e272bfcc23e4a662"
+            }
+        ],
+        "speed": 50,
+        "distance": 0.28412038166503223,
+        "execution_start": "2024-07-21T08:23:35.440Z",
+        "execution_end": null,
+        "created_at": "2024-07-21T08:23:35.440Z",
+        "updated_at": "2024-07-21T08:23:35.440Z",
+        "__v": 0
+    }
+]
+```
+
+2. 404 Not Found
+
+```json
+{
+  "error": "No flight logs found for the given drone ID"
+}
+```
+
+2. 500 Internal Server Error
+
+```json
+{
+  "error": "An unexpected error occurred"
+}
+```
+
