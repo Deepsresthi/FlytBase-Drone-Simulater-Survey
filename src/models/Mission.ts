@@ -7,6 +7,7 @@ interface Waypoint {
 }
 
 interface Mission extends Document {
+  mission_id: string;
   altitude: number;
   speed: number;
   name: string;
@@ -23,6 +24,7 @@ const WaypointSchema = new Schema<Waypoint>({
 });
 
 const MissionSchema = new Schema<Mission>({
+    mission_id: {type: String, required:true, unique: true},
   altitude: { type: Number, required: true },
   speed: { type: Number, required: true },
   name: { type: String, required: true },

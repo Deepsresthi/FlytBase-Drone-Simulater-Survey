@@ -19,8 +19,7 @@ export const register = async ({
   user = new User({ username, email, password });
   await user.save();
 
-  const payload = { userId: user.id };
-  return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '1h' });
+  return 'User registered successfully';
 };
 
 export const login = async ({
@@ -32,7 +31,7 @@ export const login = async ({
 }) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error('Invalid credentials');
+    throw new Error('User not found');
   }
 
   const isMatch = await bcrypt.compare(password, user.password);

@@ -1,23 +1,27 @@
 import { Mission } from '../models/Mission';
 import { FlightLog } from '../models/Flightlog';
 import { Drone } from '../models/Drone';
-import mongoose from 'mongoose';
+
 
 export const createMissionService = async (
   missionData: any,
   droneId: string
 ) => {
-  console.log(`Querying for drone with ID: ${droneId}`);
-  console.log('Mission Data:', missionData); // Log the mission data
-  //const drone_Id = new mongoose.Types.ObjectId(droneId);
+
   const drone = await Drone.findOne({ drone_id: droneId }).exec();
-  console.log('Found Drone:', drone); // Log the found drone
   if (!drone) {
     throw new Error('Drone not found');
   }
 
+  if (await Mission.findOne({ mission_id: missionData.mission_id }).exec()) {
+    throw new Error('Mission ID already exists');
+  }
+
+    const missionId = missionData.mission_id;
+
   const mission = new Mission({
     ...missionData,
+    mission_id: missionId,
     drone_id: drone.drone_id,
     created_at: new Date(),
     updated_at: new Date(),
@@ -27,13 +31,12 @@ export const createMissionService = async (
 
   const flightLog = new FlightLog({
     flight_id: `FL-${Date.now()}`,
-    drone_id: drone.drone_id,
+      drone_id: drone.drone_id,
+    mission_id: mission.mission_id,
     mission_name: mission.name,
     waypoints: mission.waypoints,
     speed: mission.speed,
     distance: 0,
-    // execution_start: new Date(),
-    // execution_end: null,
     created_at: new Date(),
     updated_at: new Date(),
   });
@@ -61,7 +64,7 @@ const calculateDistance = (
   lat2: number,
   lng2: number
 ): number => {
-  const R = 6371e3; // Earth radius in meters
+  const R = 6371e3; 
   const φ1 = (lat1 * Math.PI) / 180;
   const φ2 = (lat2 * Math.PI) / 180;
   const Δφ = ((lat2 - lat1) * Math.PI) / 180;
@@ -91,7 +94,7 @@ export const startMission = async (missionId: string) => {
     drone_id: drone.drone_id,
     mission_name: mission.name,
     mission_id: mission._id,
-    waypoints: [], // Initialize with empty waypoints
+    waypoints: [], 
     speed: mission.speed,
     distance: 0,
     execution_start: new Date(),
@@ -99,12 +102,18 @@ export const startMission = async (missionId: string) => {
     created_at: new Date(),
     updated_at: new Date(),
   });
+    
+    flightLog.waypoints.push({
+      time: 0,
+      alt: mission.waypoints[0].alt,
+      lat: mission.waypoints[0].lat,
+      lng: mission.waypoints[0].lng,
+    });
 
-  // Start simulation
   const waypoints = mission.waypoints;
   let totalDistance = 0;
   let previousWaypoint = waypoints[0];
-  let previousTime = 0; // Start from 0 seconds
+  let calculatedTime = 0; 
   for (let i = 1; i < waypoints.length; i++) {
     const currentWaypoint = waypoints[i];
     const distance = calculateDistance(
@@ -113,18 +122,18 @@ export const startMission = async (missionId: string) => {
       currentWaypoint.lat,
       currentWaypoint.lng
     );
-    totalDistance += distance;
+      totalDistance += distance;
+      totalDistance = totalDistance / 1000;
+      calculatedTime = totalDistance / (mission.speed);
 
-    // Update the time property
 
     flightLog.waypoints.push({
-      time: previousTime,
+      time: calculatedTime,
       alt: currentWaypoint.alt,
       lat: currentWaypoint.lat,
       lng: currentWaypoint.lng,
     });
 
-    previousTime += 1;
   }
 
   flightLog.distance = totalDistance;
@@ -134,8 +143,6 @@ export const startMission = async (missionId: string) => {
 };
 
 export const stopMission = async (missionId: string) => {
-  //   const flightLog = await FlightLog.findOne({ mission_id: missionId }).exec();
-  console.log('the missionId: ', missionId);
   const flightLog = await FlightLog.findOne({ mission_id: missionId });
   if (!flightLog) {
     throw new Error('Flight log not found');
