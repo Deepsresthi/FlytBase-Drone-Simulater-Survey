@@ -758,7 +758,7 @@ Get all the Flight Logs.
 }
 ```
 
-## Fetch Flight for Specific Drone
+## Fetch Flight Logs for Specific Drone
 
 ### GET /api/flight-logs/:drone_id
 
@@ -852,6 +852,27 @@ id: The unique identifier of drone.
 }
 ```
 
+3. 500 Internal Server Error
+
+```json
+{
+  "error": "An unexpected error occurred"
+}
+```
+
+## Download All Flight Logs
+
+### POST /api/flight-logs/download
+
+Download all the Flight Log in PDF 
+
+#### Response
+
+1. 200 OK
+
+- `Content-Type`: application/pdf
+- `Description`: The response will be a PDF file containing all flight logs.
+
 2. 500 Internal Server Error
 
 ```json
@@ -860,3 +881,35 @@ id: The unique identifier of drone.
 }
 ```
 
+## Download PDF for Flight Logs of Particular Drone
+
+### GET /api/flight-logs/:drone_id/download
+
+Download the Flight Log in PDF for a particular drone.
+
+Request Params:
+
+droneId: The unique identifier of the drone whose flight logs you want to download.
+
+#### Response
+
+1. 200 OK
+
+- `Content-Type`: application/pdf
+- `Description`: The response will be a PDF file containing the flight logs for the specified drone.
+
+2. 404 Not Found
+
+```json
+{
+  "error": "No flight logs found for the specified drone ID"
+}
+```
+
+3. 500 Internal Server Error
+
+```json
+{
+  "error": "An unexpected error occurred"
+}
+```
