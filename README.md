@@ -61,6 +61,26 @@ flytbase/
 └── README.md   
 ```
 
+
+## Haversine Formula
+The Haversine Formula is used in this project to calculate the great-circle distance between two points on the Earth's surface. This is particularly useful for determining distances between waypoints in drone missions.
+
+### Formula
+The Haversine formula is given by:
+```
+R = earth’s radius (mean radius = 6,371km)
+
+Δlat = lat2− lat1
+
+Δlong = long2− long1
+
+a = sin²(Δlat/2) + cos(lat1).cos(lat2).sin²(Δlong/2)
+
+c = 2.atan2(√a, √(1−a))
+
+d = R.c
+```
+
 ## Data Model Descriptions
 
 ### User
