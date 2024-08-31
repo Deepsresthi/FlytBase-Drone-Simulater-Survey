@@ -20,8 +20,13 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
+<<<<<<< HEAD
     "pdfkit": "^0.15.0",
     "puppeteer": "^23.2.1"
+=======
+    "node": "^22.7.0",
+    "pdfkit": "^0.15.0"
+>>>>>>> da4b8707893d3d00558c436db15d42f0ec2f30c7
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
